@@ -1,5 +1,5 @@
 name: Setup Git user
-description: Sets the Git user and email to enable committing
+description: Sets the git user and email from a token
 author: Federico Brigante + Trev
 branding:
   icon: chevron-up
