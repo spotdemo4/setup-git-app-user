@@ -4,7 +4,7 @@ author: Federico Brigante + Trev
 branding:
   icon: chevron-up
   color: yellow
-  
+
 inputs:
   token:
     description: PAT or GitHub App Token
@@ -15,7 +15,7 @@ runs:
   steps:
     - shell: bash
       env:
-        GITHUB_TOKEN: '${{ inputs.token }}'
+        GH_TOKEN: '${{ inputs.token }}'
       run: |
         user=$(
           gh api \
