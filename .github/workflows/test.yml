@@ -2,8 +2,8 @@ name: CI
 on: push
 
 jobs:
-  Test:
-    name: Live Action Test
+  test-config:
+    name: Git Config Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,3 +19,30 @@ jobs:
           git commit --allow-empty --message 'git test'
           git push origin HEAD:testing-branch
           git push --delete origin testing-branch
+
+  test-output:
+    name: Git Output Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Action
+        id: action
+        uses: ./
+        with:
+          app-id: ${{ vars.CLIENT_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Test the action by creating and deleting a commit
+        run: |
+          name=$(git config user.name)
+          if [[ "$name" != "${{ steps.action.outputs.name }}" ]]; then
+            echo "name does not match!"
+            exit 1
+          fi
+
+          email=$(git config user.email)
+          if [[ "$email" != "${{ steps.action.outputs.email }}" ]]; then
+            echo "email does not match!"
+            exit 1
+          fi

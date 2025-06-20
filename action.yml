@@ -13,6 +13,14 @@ inputs:
     description: private key
     required: true
 
+outputs:
+  name:
+    description: git user name
+    value: ${{ steps.out.outputs.name }}
+  email:
+    description: git user email
+    value: ${{ steps.out.outputs.email }}
+
 runs:
   using: composite
   steps:
@@ -22,15 +30,23 @@ runs:
         app-id: ${{ inputs.app-id }}
         private-key: ${{ inputs.private-key }}
 
-    - name: Get GitHub User ID
+    - name: Get User ID
       shell: bash
       id: get-user-id
       env:
         GH_TOKEN: ${{ steps.app-token.outputs.token }}
       run: echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
 
-    - shell: bash
+    - name: Set output
+      shell: bash
+      id: out
       run: |
-        git config --global user.name '${{ steps.app-token.outputs.app-slug }}[bot]'
-        git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
+        echo "name=${{ steps.app-token.outputs.app-slug }}[bot]" >> "$GITHUB_OUTPUT"
+        echo "email=${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com" >> "$GITHUB_OUTPUT"
+
+    - name: Set config
+      shell: bash
+      run: |
+        git config --global user.name "${{ steps.out.outputs.name }}"
+        git config --global user.email "${{ steps.out.outputs.email }}"
 
