@@ -51,6 +51,6 @@ runs:
     - name: Set config
       shell: bash
       run: |
-        git config --global user.name "${{ steps.out.outputs.name }}"
-        git config --global user.email "${{ steps.out.outputs.email }}"
+        git config --local user.name "${{ steps.out.outputs.name }}"
+        git config --local user.email "${{ steps.out.outputs.email }}"
 
