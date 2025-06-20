@@ -1,13 +1,25 @@
 name: Setup Git user
 description: Sets the Git user and email to enable committing
-author: Federico Brigante
+author: Federico Brigante + Trev
 branding:
   icon: chevron-up
   color: yellow
 
+inputs:
+  token:
+    description: "PAT or GitHub App Token"
+    required: true
+
 runs:
   using: composite
   steps:
+    - shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+      run: |
+        user=$(gh api user)
+        echo $user
+
     - shell: bash
       run: |
         git config user.name github-actions[bot]

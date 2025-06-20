@@ -18,10 +18,12 @@ jobs:
   Release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
       - run: gh release create ${{ github.event.inputs.Version }} --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
+          
       - name: Update major tag
         run: |
           MAJOR=$(echo ${{ github.event.inputs.Version }} | sed 's/\..*//')
