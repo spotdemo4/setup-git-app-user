@@ -1,6 +1,6 @@
-name: Setup Git user
-description: Sets the git user and email from a token
-author: Federico Brigante + Trev
+name: Setup Git App User
+description: Sets the git user and email from an app id and private key
+author: Trev
 branding:
   icon: chevron-up
   color: yellow
