@@ -1,24 +1,32 @@
 # setup-git-app-user
 
-> GitHub Action that sets git user and email using an app id and private key
-
-If you try to use `git commit` or `git tag` on GitHub Actions, it will throw an error:
-
-<img src="https://user-images.githubusercontent.com/1402241/96522622-59905880-1239-11eb-9993-07b64bebb282.png" alt="Please tell me who you are. Run git config to set your account's default identity" width="489">
-
-This is a convenience action which sets the user and email in a few lines.
+> GitHub Action that sets `git config user.name` and `git config user.email` using an app id and private key.
 
 # Usage
 
 ```yaml
     steps:
       - uses: actions/checkout@v4
-      - uses: spotdemo4/setup-git-app-user@v1
+      - uses: spotdemo4/setup-git-app-user@v2
         with:
           app-id: ${{ vars.CLIENT_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
       - run: git commit --message 'Something cool'
       - run: git push
+```
+
+or just get the output:
+
+```yaml
+    steps:
+      - uses: actions/checkout@v4
+      - uses: spotdemo4/setup-git-app-user@v2
+        id: app-user
+        with:
+          app-id: ${{ vars.CLIENT_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+      - run: echo ${{ steps.app-user.outputs.name }}
+      - run: echo ${{ steps.app-user.outputs.email }}
 ```
 
 Forked from [setup-git-user](https://github.com/fregante/setup-git-user)
