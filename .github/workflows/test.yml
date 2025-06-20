@@ -8,16 +8,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/create-github-app-token@v2
-        id: token
-        with:
-          app-id: ${{ vars.CLIENT_ID }}
-          private-key: ${{ secrets.PRIVATE_KEY }}
-
       - name: Run Action
         uses: ./
         with:
-          token: ${{ steps.token.outputs.token }}
+          app-id: ${{ vars.CLIENT_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
 
       - name: Test the action by creating and deleting a commit
         run: |
