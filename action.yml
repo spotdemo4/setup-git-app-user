@@ -53,4 +53,5 @@ runs:
       run: |
         git config --local user.name "${{ steps.out.outputs.name }}"
         git config --local user.email "${{ steps.out.outputs.email }}"
+        git remote set-url origin "https://${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git"
 
