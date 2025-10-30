@@ -33,7 +33,7 @@ runs:
         app-id: ${{ inputs.app-id }}
         private-key: ${{ inputs.private-key }}
 
-    - name: Get User ID
+    - name: Get user id
       shell: bash
       id: get-user-id
       env:
@@ -50,6 +50,7 @@ runs:
 
     - name: Set config
       shell: bash
+      continue-on-error: true
       run: |
         git config --global user.name "${{ steps.out.outputs.name }}"
         git config --global user.email "${{ steps.out.outputs.email }}"
