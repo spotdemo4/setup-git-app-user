@@ -17,7 +17,7 @@ jobs:
       - name: Test the action by creating and deleting a commit
         run: |
           git commit --allow-empty --message 'git test'
-          git push origin HEAD:testing-branch
+          git push origin HEAD:refs/heads/testing-branch
           git push --delete origin testing-branch
 
   test-output:
